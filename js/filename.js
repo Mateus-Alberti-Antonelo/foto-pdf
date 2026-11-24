@@ -1,4 +1,4 @@
-// Monta o nome do arquivo PDF: "<Nome> - <Título>.pdf" ou "<Título>.pdf".
+// Monta o nome do arquivo PDF: "<Título>.pdf" (ou "Caderno AAAA-MM-DD.pdf" sem título).
 (function (App) {
   const MAX_BASE_LENGTH = 120;
 
@@ -15,10 +15,8 @@
     return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   }
 
-  App.buildFileName = function (title, name, includeName, today = new Date()) {
-    const cleanTitle = App.sanitizeFileNamePart(title) || 'Caderno ' + isoLocalDate(today);
-    const cleanName = includeName ? App.sanitizeFileNamePart(name) : '';
-    const base = (cleanName ? cleanName + ' - ' + cleanTitle : cleanTitle)
+  App.buildFileName = function (title, today = new Date()) {
+    const base = (App.sanitizeFileNamePart(title) || 'Caderno ' + isoLocalDate(today))
       .slice(0, MAX_BASE_LENGTH)
       .trim();
     return base + '.pdf';

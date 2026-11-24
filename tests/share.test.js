@@ -9,7 +9,6 @@ test('compartilha quando suportado', async () => { const nav = { canShare: () =>
 test('cancelado não baixa', async () => { const d = fakeDoc(); const nav = { canShare: () => true, share: async () => { throw new DOMException('x', 'AbortError'); } }; assertEqual(await App.sharePdf(pdfBlob(), 'a.pdf', nav, d), 'cancelled'); assertEqual(d.clicks, 0); });
 test('sem suporte baixa', async () => { const d = fakeDoc(); assertEqual(await App.sharePdf(pdfBlob(), 'a.pdf', {}, d), 'downloaded'); assertEqual(d.clicks, 1); assertEqual(d.lastDownload, 'a.pdf'); });
 test('erro no share baixa', async () => { const d = fakeDoc(); const nav = { canShare: () => true, share: async () => { throw new Error('falhou'); } }; assertEqual(await App.sharePdf(pdfBlob(), 'a.pdf', nav, d), 'downloaded'); });
-test('nome salvo', () => { App.saveName('Ana'); assertEqual(App.loadName(), 'Ana'); localStorage.removeItem('fotoPdf.nome'); assertEqual(App.loadName(), ''); });
 test('share bloqueado por demora pede novo toque', async () => {
   const d = fakeDoc();
   const nav = { canShare: () => true, share: async () => { throw new DOMException('x', 'NotAllowedError'); } };

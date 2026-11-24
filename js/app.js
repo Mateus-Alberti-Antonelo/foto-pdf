@@ -3,8 +3,7 @@
   const $ = (id) => document.getElementById(id);
   const el = {
     camera: $('cameraInput'), gallery: $('galleryInput'), pages: $('pages'), empty: $('empty'),
-    title: $('title'), includeName: $('includeName'), name: $('name'), nameField: $('nameField'),
-    fileName: $('fileName'), status: $('status'), send: $('send'), download: $('download'), newPdf: $('newPdf'),
+    title: $('title'), fileName: $('fileName'), status: $('status'), send: $('send'), download: $('download'), newPdf: $('newPdf'),
   };
   const pageList = App.createPageList();
   const enqueue = App.createSerialRunner();
@@ -20,7 +19,7 @@
   }
 
   function currentFileName() {
-    return App.buildFileName(el.title.value, el.name.value, el.includeName.checked);
+    return App.buildFileName(el.title.value);
   }
 
   function toolButton(label, ariaLabel, className, onClick, disabled) {
@@ -70,7 +69,6 @@
 
   // Atualiza o que muda ao digitar, sem tocar nas miniaturas.
   function renderControls() {
-    el.nameField.hidden = !el.includeName.checked;
     el.fileName.textContent = currentFileName();
     const disabled = busy() || pageList.count() === 0;
     el.send.disabled = disabled;
@@ -141,8 +139,6 @@
   el.camera.addEventListener('change', () => { const f = Array.from(el.camera.files); el.camera.value = ''; addFiles(f); });
   el.gallery.addEventListener('change', () => { const f = Array.from(el.gallery.files); el.gallery.value = ''; addFiles(f); });
   el.title.addEventListener('input', renderControls);
-  el.includeName.addEventListener('change', renderControls);
-  el.name.addEventListener('input', () => { App.saveName(el.name.value); renderControls(); });
   el.send.addEventListener('click', () => deliver('share'));
   el.download.addEventListener('click', () => deliver('download'));
   el.newPdf.addEventListener('click', () => {
@@ -154,7 +150,6 @@
     renderControls();
   });
 
-  el.name.value = App.loadName();
   renderPages();
 
   // Funcionar offline (só em https; em file:// o navegador não permite).

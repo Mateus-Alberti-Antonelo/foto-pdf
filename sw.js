@@ -2,7 +2,7 @@
 // IMPORTANTE: a cada mudança em qualquer arquivo do app, aumente o número em CACHE
 // (foto-pdf-v1 → foto-pdf-v2 …) e mantenha a lista FILES completa; senão o
 // celular continua usando a versão antiga.
-const CACHE = 'foto-pdf-v1';
+const CACHE = 'foto-pdf-v2';
 const FILES = [
   './',
   'index.html',
@@ -12,7 +12,6 @@ const FILES = [
   'js/image.js',
   'js/pdf.js',
   'js/share.js',
-  'js/settings.js',
   'js/queue.js',
   'js/app.js',
   'vendor/jspdf.umd.min.js',

@@ -99,8 +99,7 @@ h1 {
 .big-button:focus-visible,
 .link-button:focus-visible,
 .page-tools button:focus-visible,
-.field input:focus-visible,
-.check input:focus-visible {
+.field input:focus-visible {
   outline: 3px solid #f2b705;
   outline-offset: 2px;
 }
@@ -190,16 +189,6 @@ h1 {
   font-weight: 400;
   color: var(--graphite);
 }
-
-.check {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  min-height: 48px;
-  font-weight: 600;
-}
-
-.check input { width: 1.4rem; height: 1.4rem; accent-color: var(--ink); }
 
 .filename {
   margin: 0;

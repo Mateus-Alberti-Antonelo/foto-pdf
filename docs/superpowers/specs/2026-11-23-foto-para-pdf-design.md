@@ -3,6 +3,11 @@
 **Data:** 2026-11-23
 **Status:** aprovado
 
+> **Mudança em 2026-11-24:** a pedido do usuário, o nome do aluno saiu do app.
+> O arquivo é sempre `<Título>.pdf` (ou `Caderno AAAA-MM-DD.pdf` sem título);
+> quando um professor pede o nome, o usuário escreve no próprio título.
+> Os itens sobre nome abaixo valem só como histórico.
+
 ## Intenção
 App pessoal, de uso exclusivo do dono, para fotografar páginas do caderno da
 faculdade e juntá-las num PDF para enviar aos professores. Alguns professores
