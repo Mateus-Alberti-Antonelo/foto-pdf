@@ -4,7 +4,7 @@
 
   App.sanitizeFileNamePart = function (s) {
     return String(s || '')
-      .replace(/[\/:*?"<>|\x00-\x1F]/g, ' ')
+      .replace(/[\\/:*?"<>|\x00-\x1F]/g, ' ')
       .replace(/\s+/g, ' ')
       .trim()
       .replace(/[.\s]+$/, '');

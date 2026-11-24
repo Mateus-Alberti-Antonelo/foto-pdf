@@ -10,3 +10,4 @@ test('limite de tamanho', () => {
   const f = App.buildFileName('x'.repeat(300), '', false);
   assertEqual(f.length, 124); // 120 + ".pdf"
 });
+test('barra invertida', () => assertEqual(App.sanitizeFileNamePart('Lista 1\\2'), 'Lista 1 2'));

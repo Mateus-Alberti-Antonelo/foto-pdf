@@ -13,6 +13,7 @@ const FILES = [
   'js/pdf.js',
   'js/share.js',
   'js/settings.js',
+  'js/queue.js',
   'js/app.js',
   'vendor/jspdf.umd.min.js',
   'manifest.webmanifest',
@@ -21,7 +22,9 @@ const FILES = [
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(FILES)).then(() => self.skipWaiting()));
+  // cache: 'reload' ignora o cache HTTP, para a versão nova não misturar arquivos velhos.
+  const requests = FILES.map((f) => new Request(f, { cache: 'reload' }));
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(requests)).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (event) => {

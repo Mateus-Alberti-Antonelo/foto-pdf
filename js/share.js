@@ -20,6 +20,8 @@
         return 'shared';
       } catch (e) {
         if (e && e.name === 'AbortError') return 'cancelled';
+        // Demorou demais desde o toque: o navegador exige um toque novo.
+        if (e && e.name === 'NotAllowedError') return 'needs-tap';
       }
     }
     App.downloadPdf(blob, fileName, doc);
