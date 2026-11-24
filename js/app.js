@@ -125,4 +125,9 @@
 
   el.name.value = App.loadName();
   render();
+
+  // Funcionar offline (só em https; em file:// o navegador não permite).
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('sw.js').catch(() => { /* app segue funcionando online */ });
+  }
 })(window.App = window.App || {});

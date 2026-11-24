@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Gerador de ícone</title></head>
+<body>
+<!--
+  Gera o ícone do app num canvas e escreve o PNG (base64) num <pre id="png">.
+  Uso: tools/make-icons.sh (abre esta página com ?size=192 e ?size=512).
+-->
+<canvas id="c"></canvas>
+<pre id="png"></pre>
+<script>
+  const size = Number(new URLSearchParams(location.search).get('size')) || 512;
+  const c = document.getElementById('c');
+  c.width = c.height = size;
+  const x = c.getContext('2d');
+  const u = size / 100; // unidade relativa
+
+  // fundo tinta azul (sem cantos: o sistema recorta)
+  x.fillStyle = '#1e3a8a';
+  x.fillRect(0, 0, size, size);
+
+  // folha de caderno com canto dobrado
+  const L = 24 * u, T = 16 * u, W = 52 * u, H = 68 * u, F = 14 * u;
+  x.fillStyle = '#fafbfd';
+  x.beginPath();
+  x.moveTo(L, T); x.lineTo(L + W - F, T); x.lineTo(L + W, T + F); x.lineTo(L + W, T + H); x.lineTo(L, T + H);
+  x.closePath(); x.fill();
+  x.fillStyle = '#c9d6ea';
+  x.beginPath(); x.moveTo(L + W - F, T); x.lineTo(L + W - F, T + F); x.lineTo(L + W, T + F); x.closePath(); x.fill();
+
+  // pautas e margem
+  x.strokeStyle = '#b9c9e2'; x.lineWidth = Math.max(1, 1.2 * u);
+  for (let y = T + 24 * u; y < T + H - 4 * u; y += 7 * u) { x.beginPath(); x.moveTo(L + 4 * u, y); x.lineTo(L + W - 4 * u, y); x.stroke(); }
+  x.strokeStyle = '#d94848'; x.lineWidth = Math.max(1, 1.4 * u);
+  x.beginPath(); x.moveTo(L + 10 * u, T + 4 * u); x.lineTo(L + 10 * u, T + H - 4 * u); x.stroke();
+
+  // etiqueta PDF
+  x.fillStyle = '#d94848';
+  x.fillRect(L - 6 * u, T + 40 * u, 40 * u, 16 * u);
+  x.fillStyle = '#ffffff';
+  x.font = '800 ' + (12 * u) + 'px system-ui, "Segoe UI", sans-serif';
+  x.textBaseline = 'middle';
+  x.fillText('PDF', L - 1 * u, T + 48.5 * u);
+
+  document.getElementById('png').textContent = c.toDataURL('image/png').split(',')[1];
+</script>
+</body>
+</html>
