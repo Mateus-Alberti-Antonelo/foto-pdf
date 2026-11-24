@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Foto para PDF</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="sheet">
+    <header class="top">
+      <h1>Foto para PDF</h1>
+      <button type="button" id="newPdf" class="link-button">Novo PDF</button>
+    </header>
+
+    <section class="capture" aria-label="Adicionar fotos">
+      <label class="big-button primary">
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+        📷 Tirar foto
+      </label>
+      <label class="big-button">
+        <input type="file" id="galleryInput" accept="image/*" multiple hidden>
+        🖼 Galeria
+      </label>
+    </section>
+
+    <p id="empty" class="empty">Nenhuma foto ainda. Tire uma foto da página do caderno ou escolha da galeria.</p>
+    <ol id="pages" class="pages" aria-label="Páginas do PDF"></ol>
+
+    <section class="fields" aria-label="Nome do arquivo">
+      <label class="field">
+        <span>Título</span>
+        <input type="text" id="title" placeholder="Ex.: Lista 3 Cálculo" autocomplete="off">
+      </label>
+      <label class="check">
+        <input type="checkbox" id="includeName" checked>
+        <span>Incluir meu nome no arquivo</span>
+      </label>
+      <label class="field" id="nameField">
+        <span>Meu nome</span>
+        <input type="text" id="name" placeholder="Seu nome completo" autocomplete="name">
+      </label>
+      <p class="filename">Arquivo: <strong id="fileName"></strong></p>
+    </section>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+  </main>
+
+  <footer class="actions">
+    <button type="button" id="send" class="big-button primary" disabled>Enviar PDF</button>
+    <button type="button" id="download" class="big-button" disabled>Baixar</button>
+  </footer>
+
+  <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="js/filename.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/image.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
