@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Testes de atualização — Foto para PDF</title></head>
+<body>
+<!-- Precisa de http://localhost (service worker não roda em file://). Rode tools/run-update-tests.sh -->
+<script src="../js/image.js"></script>
+<script src="harness.js"></script>
+<script>
+  // Reaproveita só o helper makePng de image.test.js.
+  window.__test = window.test; window.test = () => {};
+</script>
+<script src="image.test.js"></script>
+<script>window.test = window.__test;</script>
+<script src="update.test.js"></script>
+<script>
+  // Manda o resultado ao servidor local (o Chrome headless não espera testes assíncronos).
+  runTests().then(() => fetch('/__result', {
+    method: 'POST',
+    body: Array.from(document.querySelectorAll('pre')).map((p) => p.textContent).join('\n'),
+  }));
+</script>
+</body>
+</html>

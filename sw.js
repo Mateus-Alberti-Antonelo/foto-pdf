@@ -2,7 +2,7 @@
 // IMPORTANTE: a cada mudança em qualquer arquivo do app, aumente o número em CACHE
 // (foto-pdf-v1 → foto-pdf-v2 …) e mantenha a lista FILES completa; senão o
 // celular continua usando a versão antiga.
-const CACHE = 'foto-pdf-v2';
+const CACHE = 'foto-pdf-v3';
 const FILES = [
   './',
   'index.html',

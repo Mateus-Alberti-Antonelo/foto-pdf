@@ -148,12 +148,32 @@
     el.title.value = '';
     setStatus('');
     renderControls();
+    applyUpdateIfIdle();
   });
 
   renderPages();
 
-  // Funcionar offline (só em https; em file:// o navegador não permite).
-  if ('serviceWorker' in navigator && location.protocol === 'https:') {
-    navigator.serviceWorker.register('sw.js').catch(() => { /* app segue funcionando online */ });
+  // Versão nova do app: recarrega sozinho, mas nunca no meio de um PDF (perderia as fotos).
+  let updateReady = false;
+  function applyUpdateIfIdle() {
+    if (!updateReady || busy() || pageList.count() > 0) return;
+    location.reload();
+  }
+
+  // Funcionar offline (https ou localhost; em file:// o navegador não permite).
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    let hadController = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController) { hadController = true; return; } // primeira instalação: a tela já é a atual
+      updateReady = true;
+      if (busy() || pageList.count() > 0) setStatus('Atualização baixada. Ela entra quando você tocar em Novo PDF.');
+      applyUpdateIfIdle();
+    });
+    navigator.serviceWorker.register('sw.js').then((reg) => {
+      // No celular, "fechar" o app costuma só pausar: procura versão nova toda vez que ele volta à tela.
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') reg.update().catch(() => {});
+      });
+    }).catch(() => { /* app segue funcionando online */ });
   }
 })(window.App = window.App || {});

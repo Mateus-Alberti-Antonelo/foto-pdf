@@ -1,3 +1,5 @@
 *.tmp
 .chrome-profile/
 .out/
+.chrome-profile-update/
+.update-result.txt
